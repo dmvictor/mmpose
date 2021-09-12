@@ -106,6 +106,11 @@ def main():
             return_heatmap=return_heatmap,
             outputs=output_layer_names)
 
+        method = args.pose_config.split('/')[-1].split('.')[0]
+        print(f'poseResult: {pose_results}')
+        print(f'retOutput: {returned_outputs}')
+        print(f'pose_config: {method}')        
+
         if args.out_img_root == '':
             out_file = None
         else:
@@ -113,6 +118,7 @@ def main():
             out_file = os.path.join(args.out_img_root, f'vis_{i}.jpg')
 
         vis_pose_result(
+            method,
             pose_model,
             image_name,
             pose_results,

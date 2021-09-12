@@ -193,7 +193,7 @@ def imshow_keypoints(img,
                         r, g, b = pose_kpt_color[kid]
                         cv2.circle(img, (int(x_coord), int(y_coord)), radius,
                                    (int(r), int(g), int(b)), -1)
-                        cv2.putText(img_copy, "{:.2f}".format(kpt_score), (int(x_coord+3), int(y_coord-3)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)                   
+                        cv2.putText(img, "{:.2f}".format(kpt_score), (int(x_coord+3), int(y_coord-3)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)                   
 
     return img
 

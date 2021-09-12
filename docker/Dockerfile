@@ -17,7 +17,15 @@ RUN pip install cython
 RUN pip install xtcocotools
 
 # Install MMCV
-RUN pip install mmcv-full==latest+torch1.6.0+cu101 -f https://download.openmmlab.com/mmcv/dist/index.html
+RUN pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu101/torch1.6.0/index.html
+
+# Install trimesh & poseval
+RUN pip install trimesh
+RUN pip install https://github.com/svenkreiss/poseval.git
+
+# Install MMDetection
+RUN pip install openmim
+RUN mim install mmdet
 
 # Install MMPose
 RUN conda clean --all
