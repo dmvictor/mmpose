@@ -50,7 +50,7 @@ def main():
         default=0.3,
         help='Bounding box score threshold')
     parser.add_argument(
-        '--kpt-thr', type=float, default=0.3, help='Keypoint score threshold')
+        '--kpt-thr', type=float, default=0, help='Keypoint score threshold')
     parser.add_argument(
         '--radius',
         type=int,
@@ -61,6 +61,11 @@ def main():
         type=int,
         default=1,
         help='Link thickness for visualization')
+    parser.add_argument(
+        '--bbox_color',
+        type=str,
+        default='yellow',
+        help='BBox color for visualization')    
 
     assert has_mmdet, 'Please install mmdet to run the demo.'
 
@@ -114,6 +119,11 @@ def main():
         return_heatmap=return_heatmap,
         outputs=output_layer_names)
 
+    method = args.pose_config.split('/')[-1].split('.')[0]
+    print(f'poseResult: {pose_results}')
+    print(f'retOutput: {returned_outputs}')
+    print(f'pose_config: {method}')    
+
     if args.out_img_root == '':
         out_file = None
     else:
@@ -122,6 +132,7 @@ def main():
 
     # show the results
     vis_pose_result(
+        method,
         pose_model,
         image_name,
         pose_results,
@@ -130,6 +141,7 @@ def main():
         kpt_score_thr=args.kpt_thr,
         radius=args.radius,
         thickness=args.thickness,
+        bbox_color=args.bbox_color,
         show=args.show,
         out_file=out_file)
 

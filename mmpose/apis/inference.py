@@ -547,7 +547,8 @@ def inference_bottom_up_pose_model(model,
     return pose_results, returned_outputs
 
 
-def vis_pose_result(model,
+def vis_pose_result(method,
+                    model,
                     img,
                     result,
                     radius=4,
@@ -790,6 +791,7 @@ def vis_pose_result(model,
         model = model.module
 
     img = model.show_result(
+        method,
         img,
         result,
         skeleton,

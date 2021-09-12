@@ -126,31 +126,7 @@ def imshow_keypoints(img,
     img = mmcv.imread(img)
     img_h, img_w, _ = img.shape
 
-    for kpts in pose_result:
-        # draw each point on image
-        if pose_kpt_color is not None:
-            assert len(pose_kpt_color) == len(kpts)
-            for kid, kpt in enumerate(kpts):
-                x_coord, y_coord, kpt_score = int(kpt[0]), int(kpt[1]), kpt[2]
-                if kpt_score > kpt_score_thr:
-                    if show_keypoint_weight:
-                        img_copy = img.copy()
-                        r, g, b = pose_kpt_color[kid]
-                        cv2.circle(img_copy, (int(x_coord), int(y_coord)),
-                                   radius, (int(r), int(g), int(b)), -1)
-                        transparency = max(0, min(1, kpt_score))
-                        cv2.addWeighted(
-                            img_copy,
-                            transparency,
-                            img,
-                            1 - transparency,
-                            0,
-                            dst=img)
-                    else:
-                        r, g, b = pose_kpt_color[kid]
-                        cv2.circle(img, (int(x_coord), int(y_coord)), radius,
-                                   (int(r), int(g), int(b)), -1)
-
+    for kpts in pose_result:                
         # draw links
         if skeleton is not None and pose_link_color is not None:
             assert len(pose_link_color) == len(skeleton)
@@ -194,6 +170,30 @@ def imshow_keypoints(img,
                             pos1,
                             pos2, (int(r), int(g), int(b)),
                             thickness=thickness)
+            # draw each point on image
+        if pose_kpt_color is not None:
+            assert len(pose_kpt_color) == len(kpts)
+            for kid, kpt in enumerate(kpts):
+                x_coord, y_coord, kpt_score = int(kpt[0]), int(kpt[1]), kpt[2]
+                if kpt_score > kpt_score_thr:
+                    if show_keypoint_weight:
+                        img_copy = img.copy()
+                        r, g, b = pose_kpt_color[kid]
+                        cv2.circle(img_copy, (int(x_coord), int(y_coord)),
+                                   radius, (int(r), int(g), int(b)), -1)
+                        transparency = max(0, min(1, kpt_score))
+                        cv2.addWeighted(
+                            img_copy,
+                            transparency,
+                            img,
+                            1 - transparency,
+                            0,
+                            dst=img)
+                    else:
+                        r, g, b = pose_kpt_color[kid]
+                        cv2.circle(img, (int(x_coord), int(y_coord)), radius,
+                                   (int(r), int(g), int(b)), -1)
+                        cv2.putText(img_copy, "{:.2f}".format(kpt_score), (int(x_coord+3), int(y_coord-3)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)                   
 
     return img
 
