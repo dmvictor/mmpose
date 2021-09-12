@@ -269,7 +269,7 @@ class TopDown(BasePose):
         Returns:
             Tensor: Visualized img, only if not `show` or `out_file`.
         """
-        cam_no = img.split('-')[1].split('.')[0]
+        cam_no = img.split('/')[-1].split('.')[0]
         print(f"cam no.: {cam_no}")
 
         img = mmcv.imread(img)

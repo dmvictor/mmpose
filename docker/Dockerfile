@@ -8,7 +8,7 @@ ENV TORCH_CUDA_ARCH_LIST="6.0 6.1 7.0+PTX"
 ENV TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 ENV CMAKE_PREFIX_PATH="$(dirname $(which conda))/../"
 
-RUN apt-get update && apt-get install -y git ninja-build libglib2.0-0 libsm6 libxrender-dev libxext6 libgl1-mesa-glx\
+RUN apt-get update && apt-get install -y git ninja-build libglib2.0-0 libsm6 libxrender-dev libxext6 libgl1-mesa-glx vim openssh-server\
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -21,7 +21,9 @@ RUN pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu101/torc
 
 # Install trimesh & poseval
 RUN pip install trimesh
-RUN pip install https://github.com/svenkreiss/poseval.git
+RUN git clone https://github.com/svenkreiss/poseval.git /poseval
+WORKDIR /poseval
+RUN pip install -e .
 
 # Install MMDetection
 RUN pip install openmim
