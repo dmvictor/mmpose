@@ -12,33 +12,33 @@ dataset_info = dict(
     ),
     keypoint_info={
         0:
-        dict(name='nose', id=0, color=[51, 153, 255], type='upper', swap=''),
+        dict(name='nose', id=0, color=[0, 0, 255], type='upper', swap=''),
         1:
         dict(
             name='left_eye',
             id=1,
-            color=[51, 153, 255],
+            color=[0, 255, 0],
             type='upper',
             swap='right_eye'),
         2:
         dict(
             name='right_eye',
             id=2,
-            color=[51, 153, 255],
+            color=[255, 128, 0],
             type='upper',
             swap='left_eye'),
         3:
         dict(
             name='left_ear',
             id=3,
-            color=[51, 153, 255],
+            color=[0, 255, 0],
             type='upper',
             swap='right_ear'),
         4:
         dict(
             name='right_ear',
             id=4,
-            color=[51, 153, 255],
+            color=[255, 128, 0],
             type='upper',
             swap='left_ear'),
         5:

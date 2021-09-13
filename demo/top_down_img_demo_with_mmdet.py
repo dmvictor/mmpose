@@ -50,7 +50,7 @@ def main():
         default=0.3,
         help='Bounding box score threshold')
     parser.add_argument(
-        '--kpt-thr', type=float, default=0, help='Keypoint score threshold')
+        '--kpt-thr', type=float, default=0.7, help='Keypoint score threshold')
     parser.add_argument(
         '--radius',
         type=int,
@@ -84,6 +84,7 @@ def main():
 
     dataset = pose_model.cfg.data['test']['type']
     dataset_info = pose_model.cfg.data['test'].get('dataset_info', None)
+    # print(f'dataset_info: {dataset_info}')
     if dataset_info is None:
         warnings.warn(
             'Please set `dataset_info` in the config.'

@@ -301,8 +301,9 @@ class TopDown(BasePose):
                              pose_kpt_color, pose_link_color, radius,
                              thickness)
 
-        cv2.putText(img, f"#{cam_no}", (30,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2, cv2.LINE_AA)
-        cv2.putText(img, f"{method}", (30,100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2, cv2.LINE_AA)
+        cv2.putText(img, f"{method}", (30,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2, cv2.LINE_AA)
+        cv2.putText(img, f"{cam_no}", (30,100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2, cv2.LINE_AA)
+        cv2.putText(img, f"kp_thld:{kpt_score_thr}", (30,150), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2, cv2.LINE_AA)
         
         if show:
             imshow(img, win_name, wait_time)

@@ -136,8 +136,8 @@ def imshow_keypoints(img,
                 if (pos1[0] > 0 and pos1[0] < img_w and pos1[1] > 0
                         and pos1[1] < img_h and pos2[0] > 0 and pos2[0] < img_w
                         and pos2[1] > 0 and pos2[1] < img_h
-                        and kpts[sk[0], 2] > kpt_score_thr
-                        and kpts[sk[1], 2] > kpt_score_thr):
+                        and kpts[sk[0], 2] > 0
+                        and kpts[sk[1], 2] > 0):
                     r, g, b = pose_link_color[sk_id]
                     if show_keypoint_weight:
                         img_copy = img.copy()
@@ -175,7 +175,9 @@ def imshow_keypoints(img,
             assert len(pose_kpt_color) == len(kpts)
             for kid, kpt in enumerate(kpts):
                 x_coord, y_coord, kpt_score = int(kpt[0]), int(kpt[1]), kpt[2]
-                if kpt_score > kpt_score_thr:
+                # if kpt_score > kpt_score_thr:
+                # show all keypoint
+                if kpt_score > 0:
                     if show_keypoint_weight:
                         img_copy = img.copy()
                         r, g, b = pose_kpt_color[kid]
@@ -193,7 +195,13 @@ def imshow_keypoints(img,
                         r, g, b = pose_kpt_color[kid]
                         cv2.circle(img, (int(x_coord), int(y_coord)), radius,
                                    (int(r), int(g), int(b)), -1)
-                        cv2.putText(img, "{:.2f}".format(kpt_score), (int(x_coord+3), int(y_coord-3)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)                   
+                        if kpt_score > kpt_score_thr:
+                            if kid% 2 == 0:
+                                cv2.putText(img, "{:.2f}".format(kpt_score), (int(x_coord-40), int(y_coord-10)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)                  
+                            else:
+                                cv2.putText(img, "{:.2f}".format(kpt_score), (int(x_coord+6), int(y_coord+10)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1, cv2.LINE_AA)
+                        else:        
+                            cv2.putText(img, "{:.2f}".format(kpt_score), (int(x_coord), int(y_coord)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 1, cv2.LINE_AA)
 
     return img
 

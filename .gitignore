@@ -110,6 +110,7 @@ mmpose/version.py
 mmpose/.mim
 /models
 /data
+/vis_results
 .vscode
 .idea
 *.pkl
@@ -117,6 +118,7 @@ mmpose/.mim
 *.log.json
 *.npy
 work_dirs/
+vis_results/
 docs/topics/
 docs/papers/*.md
 docs/datasets.md
