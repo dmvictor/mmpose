@@ -18,7 +18,7 @@ except (ImportError, ModuleNotFoundError):
 
 
 def main():
-    """Visualize the demo images.
+    """Visualize the demo images.  
 
     Using mmdet to detect the human.
     """
