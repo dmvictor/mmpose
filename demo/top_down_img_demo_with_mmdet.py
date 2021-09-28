@@ -1,6 +1,9 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import os
 import warnings
+import numpy as np
+import pandas as pd
+
 from argparse import ArgumentParser
 
 from mmpose.apis import (inference_top_down_pose_model, init_pose_model,
@@ -31,6 +34,11 @@ def main():
         action='store_true',
         default=False,
         help='whether to show img')
+    parser.add_argument(
+        '--save-kp-conf',
+        action='store_true',
+        default=False,
+        help='whether to save keypoint confidence to csv.')
     parser.add_argument(
         '--out-img-root',
         type=str,
@@ -65,8 +73,8 @@ def main():
         '--bbox_color',
         type=str,
         default='yellow',
-        help='BBox color for visualization')    
-
+        help='BBox color for visualization')
+    
     assert has_mmdet, 'Please install mmdet to run the demo.'
 
     args = parser.parse_args()
@@ -122,8 +130,20 @@ def main():
 
     method = args.pose_config.split('/')[-1].split('.')[0]
     print(f'poseResult: {pose_results}')
-    print(f'retOutput: {returned_outputs}')
-    print(f'pose_config: {method}')    
+    print(f'args.save_kp_conf: {args.save_kp_conf}')
+
+    # Save the keypoint confidence to a csv file
+    if args.save_kp_conf:
+        pose_result = pose_results[0]
+        df = pd.DataFrame(pose_result['keypoints'][:,-1])
+        csv_name = args.out_img_root.split('/')[-1]
+        csv_file = open("out_csv/"+ f"{csv_name}.csv","a")
+        df.T.to_csv(csv_file,index=None,header=None)
+        csv_file.close()
+
+    #print(args.img.split('.')[0])
+    #print(f'retOutput: {returned_outputs}')
+    print(f'pose_config: {method}')
 
     if args.out_img_root == '':
         out_file = None
@@ -131,7 +151,7 @@ def main():
         os.makedirs(args.out_img_root, exist_ok=True)
         out_file = os.path.join(args.out_img_root, f'vis_{args.img}')
 
-    # show the results
+    # show the results    
     vis_pose_result(
         method,
         pose_model,
@@ -145,6 +165,7 @@ def main():
         bbox_color=args.bbox_color,
         show=args.show,
         out_file=out_file)
+        
 
 
 if __name__ == '__main__':

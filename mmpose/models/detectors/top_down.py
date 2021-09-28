@@ -269,7 +269,8 @@ class TopDown(BasePose):
         Returns:
             Tensor: Visualized img, only if not `show` or `out_file`.
         """
-        cam_no = img.split('/')[-1].split('.')[0]
+        print(f"out_file: {out_file}")
+        cam_no = out_file.split('/')[-1].split('.')[0]
         print(f"cam no.: {cam_no}")
 
         img = mmcv.imread(img)
@@ -309,6 +310,9 @@ class TopDown(BasePose):
             imshow(img, win_name, wait_time)
 
         if out_file is not None:
-            imwrite(img, out_file)
+            if out_file.endswith('.jpg'):
+                imwrite(img, out_file)
+            elif out_file.endswith('.mp4'):   
+                print("We do not save file over here.")
 
         return img

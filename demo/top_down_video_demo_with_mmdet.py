@@ -31,7 +31,7 @@ def main():
         '--show',
         action='store_true',
         default=False,
-        help='whether to show visualizations.')
+        help='whether to show visualizations.')    
     parser.add_argument(
         '--out-video-root',
         default='',
@@ -61,6 +61,11 @@ def main():
         type=int,
         default=1,
         help='Link thickness for visualization')
+    parser.add_argument(
+        '--bbox_color',
+        type=str,
+        default='yellow',
+        help='BBox color for visualization')    
 
     assert has_mmdet, 'Please install mmdet to run the demo.'
 
@@ -110,6 +115,7 @@ def main():
 
     # e.g. use ('backbone', ) to return backbone feature
     output_layer_names = None
+    method = args.pose_config.split('/')[-1].split('.')[0]
 
     while (cap.isOpened()):
         flag, img = cap.read()
@@ -135,6 +141,7 @@ def main():
 
         # show the results
         vis_img = vis_pose_result(
+            method,
             pose_model,
             img,
             pose_results,
@@ -143,7 +150,9 @@ def main():
             kpt_score_thr=args.kpt_thr,
             radius=args.radius,
             thickness=args.thickness,
-            show=False)
+            bbox_color=args.bbox_color,
+            show=False,
+            out_file=args.video_path)
 
         if args.show:
             cv2.imshow('Image', vis_img)

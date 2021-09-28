@@ -103,7 +103,7 @@ def imshow_keypoints(img,
                      kpt_score_thr=0.3,
                      pose_kpt_color=None,
                      pose_link_color=None,
-                     radius=4,
+                     radius=8,
                      thickness=1,
                      show_keypoint_weight=False):
     """Draw keypoints and links on an image.
@@ -192,9 +192,10 @@ def imshow_keypoints(img,
                             0,
                             dst=img)
                     else:
-                        r, g, b = pose_kpt_color[kid]
-                        cv2.circle(img, (int(x_coord), int(y_coord)), radius,
-                                   (int(r), int(g), int(b)), -1)
+                        r, g, b = pose_kpt_color[kid]                        
+                        cv2.circle(img, (int(x_coord), int(y_coord)), radius, (int(r), int(g), int(b)), -1)
+                        
+                        # Show keypoint confidence
                         if kpt_score > kpt_score_thr:
                             if kid% 2 == 0:
                                 cv2.putText(img, "{:.2f}".format(kpt_score), (int(x_coord-40), int(y_coord-10)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)                  
@@ -202,6 +203,17 @@ def imshow_keypoints(img,
                                 cv2.putText(img, "{:.2f}".format(kpt_score), (int(x_coord+6), int(y_coord+10)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1, cv2.LINE_AA)
                         else:        
                             cv2.putText(img, "{:.2f}".format(kpt_score), (int(x_coord), int(y_coord)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 1, cv2.LINE_AA)
+                        
+                        '''
+                        # Show keypoint index
+                        if kpt_score > kpt_score_thr:
+                            if kid% 2 == 0:
+                                cv2.putText(img, str(kid), (int(x_coord-15), int(y_coord-10)), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2, cv2.LINE_AA)                  
+                            else:
+                                cv2.putText(img, str(kid), (int(x_coord+6), int(y_coord+10)), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2, cv2.LINE_AA)
+                        else:        
+                            cv2.putText(img, str(kid), (int(x_coord), int(y_coord)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 1, cv2.LINE_AA)
+                        '''    
 
     return img
 
